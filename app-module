@@ -1,0 +1,108 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Routes, RouterModule, Router } from '@angular/router';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TpTimeSeriesComponent } from './tp-time-series/tp-time-series.component';
+import { OrganizationSelectComponent } from './organization-select/organization-select.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import { OKTA_CONFIG, OktaAuthGuard, OktaAuthModule, OktaCallbackComponent } from '@okta/okta-angular';
+import tpdeOktaConfig from './app.config';
+// import oktaConfig from './app.config';
+import { ButtonModule, CalendarFieldModule, DialogModule, HeaderModule,
+  InputFieldModule, MultiSelectDropdownModule, SelectFieldModule, SimpleTableModule, TabModule, WidgetModule,
+  SidebarModule, PanelMenuModule }
+from "@cigna/cigna-ngui";
+import { DropdownModule } from 'primeng/dropdown';
+import {HistogramComponent} from "./histogram/histogram.component";
+import {CritsuppComponent} from "./critsupp/critsupp.component";
+import {TabViewModule} from "primeng/tabview";
+import {TabMenuModule} from "primeng/tabmenu";
+import {TooltipModule} from "primeng/tooltip";
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import {MenuModule} from 'primeng/menu';
+import {MenubarModule} from 'primeng/menubar';
+import { OverviewComponent } from './overview/overview.component';
+import { MultiSelect, MultiSelectModule } from "primeng/multiselect";
+import {CalendarModule} from "primeng/calendar";
+import {TableModule} from 'primeng/table';
+import {InputTextModule} from 'primeng/inputtext';
+import {SkeletonModule} from 'primeng/skeleton';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { ExchangeDetailsTableComponent } from './exchange-details-table/exchange-details-table.component';
+import { ContractTableComponent } from './contract-table/contract-table.component';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import { TpdeTableComponent } from './tpde-table/tpde-table';
+import { OdfTableComponent } from './odf-table/odf-table.component';
+
+const oktaConfig = Object.assign({
+  onAuthRequired: (oktaAuth, injector) => {
+    const router = injector.get(Router);
+    // Redirect the user to your custom login page
+    router.navigate(['/login']);
+  }
+}, tpdeOktaConfig.oidc);
+
+const appRoutes: Routes = [
+  { path: '',                     component: OverviewComponent, canActivate: [OktaAuthGuard]},
+  { path: 'Preformatted_Reports', component: OverviewComponent, canActivate: [OktaAuthGuard]},
+  { path: 'Custom_Reports',       component: OverviewComponent, canActivate: [OktaAuthGuard]},
+  { path: 'Contracts',            component: OverviewComponent, canActivate: [OktaAuthGuard]},
+  { path: 'login/callback',       component: OktaCallbackComponent,},
+  { path: 'login',                component: LoginComponent }
+  //{ path: '', redirectTo: '/login', pathMatch: 'full' },
+];
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    TpTimeSeriesComponent,
+    OrganizationSelectComponent,
+    HistogramComponent,
+    CritsuppComponent,
+    OverviewComponent,
+    ExchangeDetailsTableComponent,
+    ContractTableComponent,
+    TpdeTableComponent,
+    OdfTableComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot(appRoutes, {relativeLinkResolution: 'legacy'}),
+        OktaAuthModule,
+        ButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        InputFieldModule,
+        SelectFieldModule,
+        CalendarFieldModule,
+        HeaderModule,
+        MatTableModule, AutoCompleteModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule,
+        MatButtonToggleModule, MatMenuModule, MatButtonModule,
+        TabModule, DialogModule, WidgetModule, SimpleTableModule, MultiSelectDropdownModule, SidebarModule, PanelMenuModule,
+        TabViewModule, TabMenuModule, MenuModule, MenubarModule, DropdownModule,
+        TooltipModule, MultiSelectModule, CalendarModule, TableModule, InputTextModule, SkeletonModule,
+        ProgressSpinnerModule, SelectButtonModule
+    ],
+  providers: [
+    { provide: OKTA_CONFIG, useValue: oktaConfig },
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
