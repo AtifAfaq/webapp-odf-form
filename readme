@@ -1,0 +1,524 @@
+<div class="padding">
+    <h2 style="text-align: center;"> Outbound Data Feed Form</h2>
+    <div [class]="textValue == 'Not Complete'? 'status-label1':'status-label'">
+        Status :
+        <div style="margin-left: 20px;">{{ textValue }}</div>
+    </div>
+</div>
+<form [formGroup]="odfForm">
+    <div class="padding">
+        <div class="row">
+            <div class="col-4">
+
+                <div class="flex">
+                    <div>ECSR ID</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="ECSR_ID" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>ECSR Date</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="ECSR_Date" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>TPA Name</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="TPA_Name" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Client Name</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Client_Name" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Is this Data Feed still required (Y/N) <span style="color: red; font-size: large;">*</span>
+                    </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Is_this_Data_Feed_still_required" itemSize="15"
+                            [options]="dropDownOptions">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Is_this_Data_Feed_still_required').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Client Type<span style="color: red; font-size: large;">*</span></div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Client_Type" itemSize="15" [options]="dropDownOptionsClientType">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Client_Type').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Third Party Partner Type <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Third_Party_Partner_Type" itemSize="15"
+                            [options]="dropDownOptionsThirdPartyType">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Third_Party_Partner_Type').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Critical Supplier <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Critical_Suppliers" itemSize="15" [options]="dropDownOptionsWithNA">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Critical_Suppliers').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Partner Status <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Partner_Status" required="required" itemSize="15"
+                            [options]="dropDownOptionsPartnerStatus">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Partner_Status').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Service Now ID <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Service_Now_Id" pInputText />
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Service_Now_Id').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Ariba Workspace ID</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Ariba_Workspace_Id" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Data Feed Expiration Date <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-calendar formControlName="Data_Feed_Expiration_Date" placeholder="Select Expiration Date"
+                            view="date" [minDate]="minDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [showIcon]="true">
+                        </p-calendar>
+
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Data_Feed_Expiration_Date').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Cancellation Policy <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Cancellation_Policy" itemSize="15"
+                            [options]="dropDownOptionsCancellationPolicy">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Cancellation_Policy').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Purge Policy <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Purge_Policy" itemSize="15" [options]="dropDownOptionsPurgePolicy">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Purge_Policy').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Has the HIPPA DB (HRD) Been Updated? <span style="color: red; font-size: large;">*</span>
+                    </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Has_HRD_Updated" itemSize="15" [options]="dropDownOptions">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Has_HRD_Updated').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+            </div>
+
+            <!-- ///////////////////////////////////----COLUMN NO 2------////////////////////////////////////////////////////// -->
+            <div class="col-4">
+
+                <div class="flex">
+                    <div>Does file requested align with NDA/documentation on file? <span
+                            style="color: red; font-size: large;">*</span>
+                    </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Allign_With_NDA" itemSize="15" [options]="dropDownOptions">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Allign_With_NDA').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Are all the agreements in place and valid? <span style="color: red; font-size: large;">*</span>
+                    </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Are_all_the_agreements_in_place_and_valid" itemSize="15"
+                            [options]="dropDownOptions"></p-dropdown>
+
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Are_all_the_agreements_in_place_and_valid').hasError('required')"
+                    class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Are the required documents available and do we have links to them? <span
+                            style="color: red;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Are_the_required_documents_available_and_do_we_have_links_to_them"
+                            itemSize="15" [options]="dropDownOptions">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Are_the_required_documents_available_and_do_we_have_links_to_them').errors"
+                    class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Doc 1 - NDA <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box" formControlName="Doc_1_NDA"
+                            itemSize="15" [options]="dropDownOptions">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Doc_1_NDA').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Doc 1 - NDA Location</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Doc_1_NDA_Location" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Doc 2 - BAA <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box" formControlName="Doc_2_BAA"
+                            itemSize="15" [options]="dropDownOptionsWithNA">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Doc_2_BAA').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Doc 2 - BAA Location</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Doc_2_BAA_Location" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Doc 3 - Client Authorization Letter <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Doc_3_Client_Authorization_Letter" itemSize="15"
+                            [options]="dropDownOptionsWithNA"></p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Doc_3_Client_Authorization_Letter').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Doc 3 - Client Authorization Letter Location</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Doc_3_Client_Authorization_Letter_Location"
+                            pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Doc 4 - Eligibility Letter <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Doc_4_Eligibility_Letter" itemSize="15" [options]="dropDownOptionsWithNA">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Doc_4_Eligibility_Letter').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Doc 4 - Eligibility Letter Location</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Doc_4_Eligibility_Letter_Location"
+                            pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Doc 5 - Any Other Document</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Doc_5_Any_Other_Document" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Doc 5 - Other Document Location</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Doc_5_Other_Document_Location" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Contains Sensitive Diagnosis Codes <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Contains_Sensitive_Diagnosis_Codes" itemSize="15"
+                            [options]="dropDownOptions"></p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Contains_Sensitive_Diagnosis_Codes').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Data Classification <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Data_Classification" itemSize="15"
+                            [options]="dropDownOptionsDataClassification">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Data_Classification').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+            </div>
+            <!-- ///////////////////////////////////----COLUMN NO 3------////////////////////////////////////////////////////// -->
+
+            <div class="col-4" style="padding-left:100px;">
+
+                <div class="flex">
+                    <div>Data Security Classification <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Data_Security_Classification" itemSize="15"
+                            [options]="dropDownOptionsDataSecurityClassification"></p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Data_Security_Classification').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Data Type <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box" formControlName="Data_Type"
+                            itemSize="15" [options]="dropDownOptionsDataType">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Data_Type').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Primary Data Category <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Primary_Data_Category" itemSize="15" [options]="dropDownOptionsPrimaryDataCategory"></p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Primary_Data_Category').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Additional Data Category 1</div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Additional_Data_Category_1" itemSize="15" [options]="dropDownOptionsPrimaryDataCategory"></p-dropdown>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div>Additional Data Category 2</div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Additional_Data_Category_2" itemSize="15" [options]="dropDownOptionsPrimaryDataCategory"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Additional Data Category 3</div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Additional_Data_Category_3" itemSize="15" [options]="dropDownOptionsPrimaryDataCategory"></p-dropdown>
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Is Data source CCW? <span style="color: red; font-size: large;">*</span> </div>
+                    <div>
+                        <p-dropdown [style]="{'width':'250px','height':'35px'}" class="box"
+                            formControlName="Is_Data_source_CCW" itemSize="15" [options]="dropDownOptions">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <div *ngIf=" Submitted && odfForm.get('Is_Data_source_CCW').errors" class="errorMesage">
+                    Required Field
+                </div>
+
+                <div class="flex">
+                    <div>Business Owner</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Business_Owner" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Business Owner Email</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Business_Owner_Email" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Business Owner's Manager</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Business_Owner_Manager" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>Business Owner's Manager Email</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="Business_Owner_Manager_Email" pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>ECSR Contact</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="ECSR_Contact" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>ECSR Contact Phone</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="ECSR_Contact_Phone" disabled pInputText />
+                    </div>
+                </div>
+
+                <div class="flex">
+                    <div>ECSR Contact Email</div>
+                    <div>
+                        <input class="drpdown" type="text" formControlName="ECSR_Contact_Email" disabled pInputText />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="padding">
+        <button class="btn-submit btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="submitForm()"
+            label="Submit">Submit</button>
+    </div>
+
+</form>
+
+
+<!------------------------------------------------------ The Modal ------------------------------------------->
+<div *ngIf="Submitted && !odfForm.valid" class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+          <h4 class="modal-title">Please Fill The Following Required Fields</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let i of findInvalidControls()">
+                        <li class="textControl">{{ i }}</li>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
