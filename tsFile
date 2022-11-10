@@ -1,0 +1,519 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+
+@Component({
+  selector: 'app-odf-table',
+  templateUrl: './odf-table.component.html',
+  styleUrls: ['./odf-table.component.scss']
+})
+export class OdfTableComponent implements OnInit {
+  odfForm: FormGroup;
+  textValue = 'Not Complete';
+  Submitted: boolean = false;
+  minDate = new Date('08/1/2022');
+  maxDate = new Date('12/31/2099');
+
+  dropDownOptions = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Yes',
+    value: 'Yes'
+  },
+  {
+    label: 'No',
+    value: 'No'
+  },
+  {
+    label: 'I Dont Know',
+    value: 'I Dont Know'
+  }];
+
+  dropDownOptionsDataClassification = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'IIPI (Individually Identifiable Personal Information)',
+    value: 'IIPI (Individually Identifiable Personal Information)'
+  },
+  {
+    label: 'PHI (Protected Health Information)',
+    value: 'PHI (Protected Health Information)'
+  },
+  {
+    label: 'PII (Personally Identifiable Information)',
+    value: 'PII (Personally Identifiable Information)'
+  },
+  {
+    label: 'PCI (Personal Card Information)',
+    value: 'PCI (Personal Card Information)'
+
+  }];
+
+  dropDownOptionsDataSecurityClassification = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Highly Confidential',
+    value: 'Highly Confidential'
+  },
+  {
+    label: 'Confidential',
+    value: 'Confidential'
+  },
+  {
+    label: 'Internal',
+    value: 'Internal'
+  },
+  {
+    label: 'Public',
+    value: 'Public'
+
+  }];
+
+
+  dropDownOptionsWithNA = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Yes',
+    value: 'Yes'
+  },
+  {
+    label: 'No',
+    value: 'No'
+  },
+  {
+    label: 'I Dont Know',
+    value: 'I Dont Know'
+  },
+  {
+    label: 'N/A',
+    value: 'N/A'
+  }];
+
+  dropDownOptionsPartnerStatus = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Active',
+    value: 'Active'
+  },
+  {
+    label: 'Not Active',
+    value: 'Not Active'
+  },
+  {
+    label: 'Terminated',
+    value: 'Terminated'
+  }];
+
+  dropDownOptionsCancellationPolicy = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Cancel data feed immediately upon termination',
+    value: 'Cancel data feed immediately upon termination'
+  },
+  {
+    label: 'Data feed continues in runoff',
+    value: 'Data feed continues in runoff'
+  }
+  ];
+
+  dropDownOptionsPurgePolicy = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Data to be purged by external partners immediately',
+    value: 'Data to be purged by external partners immediately'
+  },
+  {
+    label: 'Data may be retained for a period of time',
+    value: 'Data may be retained for a period of time'
+  },
+  {
+    label: 'Data may be retained indefinitely',
+    value: 'Data may be retained indefinitely'
+  }
+  ];
+
+
+  dropDownOptionsClientType = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Non-ASO Client',
+    value: 'Non-ASO Client'
+  },
+  {
+    label: 'ASO Client',
+    value: 'ASO Client'
+  },
+  {
+    label: 'BioMetric',
+    value: 'BioMetric'
+  },
+  {
+    label: 'Inbound/Outbound',
+    value: 'Inbound/Outbound'
+  }];
+
+
+  dropDownOptionsThirdPartyType = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: '4th Party',
+    value: '4th Party'
+  },
+  {
+    label: 'Client',
+    value: 'Client'
+  },
+  {
+    label: 'Client-Third-Party',
+    value: 'Client-Third-Party'
+  },
+  {
+    label: 'Govt Entity',
+    value: 'Govt Entity'
+  },
+  {
+    label: 'Govt TPR',
+    value: 'Govt TPR'
+  },
+  {
+    label: 'Multiple',
+    value: 'Multiple'
+  },
+  {
+    label: 'Producer',
+    value: 'Producer'
+  },
+  {
+    label: 'Provider',
+    value: 'Provider'
+  },
+  {
+    label: 'Provider - CCC',
+    value: 'Provider - CCC'
+  },
+  {
+    label: 'Provider with Designated Dutie',
+    value: 'Provider with Designated Dutie'
+  },
+  {
+    label: 'Supplier',
+    value: 'Supplier'
+  },
+  {
+    label: 'TPA',
+    value: 'TPA'
+  }
+  ];
+
+  dropDownOptionsPrimaryDataCategory = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Behavioral',
+    value: 'Behavioral'
+  },
+  {
+    label: 'Benefits',
+    value: 'Benefits'
+  },
+  {
+    label: 'Biometrics',
+    value: 'Biometrics'
+  },
+  {
+    label: 'cap',
+    value: 'cap'
+  },
+  {
+    label: 'claim',
+    value: 'claim'
+  },
+  {
+    label: 'Clinical',
+    value: 'Clinical'
+  },
+  {
+    label: 'Pre-Auth',
+    value: 'Pre-Auth'
+  },
+  {
+    label: 'EAP',
+    value: 'EAP'
+  },
+  {
+    label: 'Eligibility',
+    value: 'Eligibility'
+  },
+  {
+    label: 'HEI',
+    value: 'HEI'
+  },
+  {
+    label: 'HEV',
+    value: 'HEV'
+  },
+  {
+    label: 'HRA',
+    value: 'HRA'
+  },
+  {
+    label: 'IDPP',
+    value: 'IDPP'
+  },
+  {
+    label: 'Lab',
+    value: 'Lab'
+  },
+  {
+    label: 'LMP',
+    value: 'LMP'
+  },
+  {
+    label: 'LMP-DG',
+    value: 'LMP-DG'
+  },
+  {
+    label: 'Medical',
+    value: 'Medical'
+  },
+  {
+    label: 'MVA',
+    value: 'MVA'
+  },
+  {
+    label: 'MotivateMe',
+    value: 'MotivateMe'
+  },
+  {
+    label: 'N/A',
+    value: 'N/A'
+  },
+  {
+    label: 'OneGuide',
+    value: 'OneGuide'
+  },
+  {
+    label: 'Pharmacy',
+    value: 'Pharmacy'
+  },
+  {
+    label: 'Provider',
+    value: 'Provider'
+  },
+  {
+    label: 'Documents',
+    value: 'Documents'
+  },
+  {
+    label: 'Other (Speciality, etc)',
+    value: 'Other (Speciality, etc)'
+  }
+  ];
+
+  dropDownOptionsDataType = [{
+    label: 'Select an option',
+    value: ''
+  },
+  {
+    label: 'Medical - Only',
+    value: 'Medical - Only'
+  },
+  {
+    label: 'RX – Only',
+    value: 'RX – Only'
+  },
+  {
+    label: 'Eligibility - Only',
+    value: 'Eligibility - Only'
+  },
+  {
+    label: 'Medical + Eligibility',
+    value: 'Medical + Eligibility'
+  },
+  {
+    label: 'Medical + RX',
+    value: 'Medical + RX'
+  },
+  {
+    label: 'Medical + Eligibility + RX',
+    value: 'Medical + Eligibility + RX'
+  },
+  {
+    label: 'Other',
+    value: 'Other'
+  }
+  ];
+
+
+
+
+
+
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.odfForm = new FormGroup({
+
+      Is_this_Data_Feed_still_required: new FormControl('', Validators.required),
+      Client_Type: new FormControl('', Validators.required),
+      Third_Party_Partner_Type: new FormControl('', Validators.required),
+      Critical_Suppliers: new FormControl('', Validators.required),
+      Partner_Status: new FormControl('', Validators.required),
+      Data_Feed_Expiration_Date: new FormControl('', Validators.required),
+      Cancellation_Policy: new FormControl('', Validators.required),
+      Purge_Policy: new FormControl('', Validators.required),
+      Has_HRD_Updated: new FormControl('', Validators.required),
+      Allign_With_NDA: new FormControl('', Validators.required),
+      Are_all_the_agreements_in_place_and_valid: new FormControl('', Validators.required),
+      Are_the_required_documents_available_and_do_we_have_links_to_them: new FormControl('', Validators.required),
+      Doc_1_NDA: new FormControl('', Validators.required),
+      Doc_2_BAA: new FormControl('', Validators.required),
+      Doc_3_Client_Authorization_Letter: new FormControl('', Validators.required),
+      Doc_4_Eligibility_Letter: new FormControl('', Validators.required),
+      Contains_Sensitive_Diagnosis_Codes: new FormControl('', Validators.required),
+      Data_Classification: new FormControl('', Validators.required),
+      Data_Security_Classification: new FormControl('', Validators.required),
+      Data_Type: new FormControl('', Validators.required),
+      Primary_Data_Category: new FormControl('', Validators.required),
+      Is_Data_source_CCW: new FormControl('', Validators.required),
+      Service_Now_Id: new FormControl('34465', Validators.required),
+      Doc_1_NDA_Location: new FormControl(''),
+      Status: new FormControl(''),
+      ECSR_ID: new FormControl('83971'),
+      ECSR_Date: new FormControl('2022-06-14 12:03:34.0'),
+      TPA_Name: new FormControl('Hays Companies / PlanIT'),
+      Client_Name: new FormControl('AMN'),
+      Doc_2_BAA_Location: new FormControl(''),
+      Doc_3_Client_Authorization_Letter_Location: new FormControl(''),
+      Doc_4_Eligibility_Letter_Location: new FormControl(''),
+      Doc_5_Any_Other_Document: new FormControl(''),
+      Doc_5_Other_Document_Location: new FormControl(''),
+      Additional_Data_Category_1: new FormControl(''),
+      Additional_Data_Category_2: new FormControl(''),
+      Additional_Data_Category_3: new FormControl(''),
+      Business_Owner: new FormControl('Sydney Lem Karczewski (Piel)'),
+      Business_Owner_Email: new FormControl('Sydney.LemPiel@Cigna.com'),
+      Business_Owner_Manager: new FormControl(''),
+      Business_Owner_Manager_Email: new FormControl(''),
+      ECSR_Contact: new FormControl('Requests - Dental Report'),
+      ECSR_Contact_Phone: new FormControl('(860) 226-3395'),
+      ECSR_Contact_Email: new FormControl('Requests.DentalReport@Cigna.com'),
+      Ariba_Workspace_Id: new FormControl('')
+    })
+
+
+  }
+
+  ngOnInit() {
+
+  }
+
+  submitForm() {
+    this.Submitted = true;
+    if (!this.odfForm.valid) {
+      // alert('Please put required field data');
+    } else {
+
+      console.log('submit', this.odfForm.value);
+      this.textValue = 'Completed';
+      this.odfForm.reset();
+      this.Submitted = false;
+    }
+  }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.odfForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+          invalid.push(name);
+        }
+    }
+    return invalid;
+}
+
+}
+---------------------------------------------------------------------------------scss--------------------------------------------
+.flex {
+
+    padding: 7px;
+    margin-left: 5px;
+    font-size: small;
+}
+
+.box {
+    justify-content: center;
+    align-items: center;
+}
+
+.status-label {
+    display: flex;
+    padding: 3px;
+    justify-content: center;
+    background:green;
+    color: #FFFFFF;
+}
+.status-label1 {
+    display: flex;
+    padding: 3px;
+    justify-content: center;
+    background-color: red;
+    color: #FFFFFF;
+}
+.padding{
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    font-weight: bolder;
+}
+
+.btn-submit{
+    padding: 7px 78px;
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+    margin-left: 36%;
+    cursor: pointer; 
+}
+.errorMesage{
+color: red;
+font-size: 12px;
+margin-left: 20px;
+
+}
+
+.drpdown{
+    width:250px;
+    height: 35px;
+}
+
+.textControl{
+    white-space: nowrap; 
+    width: 360px; 
+    overflow:hidden;
+    text-overflow: ellipsis; 
+}
+
+.modal-dialog{
+max-width: 120vh;
+}
+
